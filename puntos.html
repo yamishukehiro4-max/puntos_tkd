@@ -7,10 +7,35 @@
   <link rel="stylesheet" href="puntos.css">
 </head>
 <body>
+  <!-- BOTÓN PARA TRANSMITIR A PANTALLA -->
+  <div class="top-bar">
+    <button class="btn-transmit" onclick="openDisplayWindow()">📺 Transmitir Pantalla</button>
+
+    <div class="sync-panel">
+      <div class="sync-info">
+        <span id="sync-status" class="sync-status offline">⚪ Desconectado</span>
+        <span class="room-label">Sala: <strong id="current-room-label">FINAL-01</strong></span>
+      </div>
+
+      <div class="room-controls">
+        <input
+          id="room-input"
+          type="text"
+          value="FINAL-01"
+          maxlength="24"
+          placeholder="Código de sala"
+          autocomplete="off"
+        >
+        <button class="btn-room" onclick="connectRoom()">Conectar</button>
+        <button class="btn-room secondary" onclick="copyShareLink()">🔗 Copiar enlace</button>
+      </div>
+    </div>
+  </div>
+
   <!-- PANTALLA DE CARGA -->
   <div id="loader-wrapper">
     <div class="loader-content">
-      <img src="image.png" alt="Cargando" class="loader-logo">
+      <img src="logo.png" alt="Cargando" class="loader-logo">
       <div class="progress-bar-container">
         <div class="progress-bar"></div>
       </div>
@@ -22,9 +47,8 @@
     <div class="score-board">
       <!-- LADO AZUL -->
       <div class="side blue-side">
-        <!-- Nuevo campo para la escuela -->
-        <input type="text" class="school-name" id="school-blue" value="" placeholder="Escuela / Club Azul">
-        <input type="text" class="fighter-name" id="name-blue" value="Competidor Azul" placeholder="Nombre Azul">
+        <input type="text" class="school-name" id="school-blue" value="" placeholder="Escuela / Club Azul" oninput="queueFieldSync('schoolBlue', this.value); updateDisplayWindow()">
+        <input type="text" class="fighter-name" id="name-blue" value="Competidor Azul" placeholder="Nombre Azul" oninput="queueFieldSync('nameBlue', this.value); updateDisplayWindow()">
         <div class="score-display" id="score-blue">0</div>
         
         <div class="controls">
@@ -41,9 +65,8 @@
 
       <!-- LADO ROJO -->
       <div class="side red-side">
-        <!-- Nuevo campo para la escuela -->
-        <input type="text" class="school-name" id="school-red" value="" placeholder="Escuela / Club Rojo">
-        <input type="text" class="fighter-name" id="name-red" value="Competidor Rojo" placeholder="Nombre Rojo">
+        <input type="text" class="school-name" id="school-red" value="" placeholder="Escuela / Club Rojo" oninput="queueFieldSync('schoolRed', this.value); updateDisplayWindow()">
+        <input type="text" class="fighter-name" id="name-red" value="Competidor Rojo" placeholder="Nombre Rojo" oninput="queueFieldSync('nameRed', this.value); updateDisplayWindow()">
         <div class="score-display" id="score-red">0</div>
         
         <div class="controls">
@@ -99,16 +122,28 @@
           <ul class="global-history-list" id="global-history-blue"></ul>
         </div>
         
-        <!-- COLUMNA ROJA -->
-        <div class="modal-col red-col">
-          <h3 id="modal-red-name">Equipo Rojo</h3>
-          <ul class="global-history-list" id="global-history-red"></ul>
+       <!-- COLUMNA ROJA -->
+            <div class="modal-col red-col">
+                <h3 id="modal-red-name">Equipo Rojo</h3>
+                <ul class="global-history-list" id="global-history-red"></ul>
+            </div>
+
+            </div>
         </div>
-
-      </div>
     </div>
-  </div>
 
-  <script src="puntos.js"></script>
+    <script type="module" src="firebase.js"></script>
+    <script type="module" src="puntos.js"></script>
+
+    <script>
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          const loader = document.getElementById('loader-wrapper');
+          const main = document.getElementById('main-content');
+          if(loader) loader.style.display = 'none';
+          if(main) main.style.display = 'flex';
+        }, 2500);
+      });
+    </script>
 </body>
 </html>

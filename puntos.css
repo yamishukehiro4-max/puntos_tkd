@@ -5,25 +5,65 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+:root {
+  --blue: #2196f3;
+  --red: #f44336;
+  --bg: #050505;
+  --panel: #0d0d0d;
+  --line: #333;
+  --muted: #999;
+}
+
 body {
-  background-color: #050505; /* Fondo negro principal */
+  background: var(--bg);
   color: #ffffff;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   overflow-x: hidden;
 }
 
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
 /* ==================================
-   PANTALLA DE CARGA
-   ================================== */
+   BOTÓN TRANSMISIÓN (Movido a la derecha)
+================================== */
+
+.btn-transmit {
+  position: fixed;
+  top: 18px;
+  right: 18px; /* Se cambió de left a right */
+  background: #111;
+  color: #ffffff;
+  border: 2px solid var(--blue);
+  padding: 11px 18px;
+  border-radius: 9px;
+  font-weight: 800;
+  font-size: 1rem;
+  z-index: 100;
+  box-shadow: 0 5px 18px rgba(33, 150, 243, 0.18);
+  transition: 0.2s;
+}
+
+.btn-transmit:hover {
+  background: var(--blue);
+  color: #000;
+  transform: translateY(-1px);
+}
+
+/* ==================================
+   LOADER
+================================== */
+
 #loader-wrapper {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #000000;
+  inset: 0;
+  background: #000000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,6 +74,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 14px;
 }
 
 .loader-logo {
@@ -42,62 +83,161 @@ body {
   border-radius: 50%;
   object-fit: cover;
   border: 4px solid #444444;
-  animation: dropIn 1s ease-out forwards, spin 2s linear 1s infinite;
+  animation:
+    dropIn 1s ease-out,
+    spin 2s linear 1s infinite;
 }
 
-@keyframes dropIn {
-  0% { transform: translateY(-100vh); opacity: 0; }
-  100% { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.loader-text {
+  color: #bbb;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .progress-bar-container {
   width: 250px;
   height: 12px;
-  background-color: #222222;
+  background: #222222;
   border-radius: 6px;
-  margin-top: 25px;
   overflow: hidden;
   border: 1px solid #444444;
 }
 
 .progress-bar {
-  width: 0%;
+  width: 0;
   height: 100%;
-  background-color: #888888;
-  animation: loadBar 3s linear forwards;
+  background: #888888;
+  animation: loadBar 2.5s linear forwards;
+}
+
+@keyframes dropIn {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes loadBar {
-  0% { width: 0%; }
-  100% { width: 100%; }
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 100%;
+  }
 }
 
 /* ==================================
-   ESTRUCTURA PRINCIPAL
-   ================================== */
+   CONTENIDO
+================================== */
+
 #main-content {
-  display: none;
-  flex: 1;
+  display: flex;
   flex-direction: column;
+  min-height: 100vh;
   width: 100%;
-  animation: fadeIn 0.8s ease-in;
+  padding-top: 72px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* ==================================
+   BARRA DE SINCRONIZACIÓN
+================================== */
+
+.sync-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+
+  padding: 12px 16px;
+
+  background: #090909;
+  border-bottom: 1px solid #222;
+
+  position: sticky;
+  top: 0;
+
+  z-index: 50;
 }
+
+.room-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.room-label {
+  font-size: 0.8rem;
+  font-weight: 900;
+  color: #aaa;
+  letter-spacing: 1px;
+}
+
+#room-input {
+  width: 150px;
+  background: #111;
+  border: 1px solid #444;
+  color: #fff;
+  border-radius: 7px;
+  padding: 9px 11px;
+  text-transform: uppercase;
+  outline: none;
+}
+
+#room-input:focus {
+  border-color: #777;
+}
+
+.sync-btn {
+  border: 1px solid #444;
+  background: #151515;
+  color: #ddd;
+  border-radius: 7px;
+  padding: 9px 12px;
+  font-weight: 800;
+}
+
+.sync-btn:hover {
+  background: #242424;
+  border-color: #777;
+}
+
+.connection-status {
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.online {
+  color: #4caf50 !important;
+}
+
+/* ==================================
+   TABLERO
+================================== */
 
 .score-board {
   display: flex;
-  flex: 1;
   width: 100%;
-  flex-direction: row;
+  flex: 1;
 }
 
 .side {
@@ -105,327 +245,645 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-  border-bottom: 2px solid #333333;
+  padding: 22px;
+  border-bottom: 2px solid #222;
+  min-width: 0;
 }
 
-.blue-side { background: linear-gradient(180deg, #00152b 0%, #050505 100%); }
-.red-side { background: linear-gradient(180deg, #2b0000 0%, #050505 100%); }
+.blue-side {
+  background:
+    linear-gradient(
+      180deg,
+      #00152b 0%,
+      #050505 100%
+    );
+}
 
-/* NUEVOS ESTILOS PARA LA ESCUELA */
+.red-side {
+  background:
+    linear-gradient(
+      180deg,
+      #2b0000 0%,
+      #050505 100%
+    );
+}
+
+/* ==================================
+   NOMBRES
+================================== */
+
 .school-name {
   width: 90%;
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-size: 1.08rem;
+  font-weight: 800;
   text-align: center;
-  border: 1px solid #444444;
+
+  border: 1px solid #444;
   background: #0a0a0a;
-  color: #bbbbbb;
-  padding: 8px;
-  border-radius: 6px;
+  color: #bbb;
+
+  padding: 9px;
+  border-radius: 7px;
   margin-bottom: 10px;
+
   text-transform: uppercase;
-  transition: border-color 0.3s;
+  outline: none;
 }
 
-.school-name:focus { outline: none; border-color: #888888; }
+.school-name:focus {
+  border-color: #888;
+}
 
 .fighter-name {
   width: 90%;
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 1.8rem;
+  font-weight: 900;
   text-align: center;
-  border: 2px solid #555555;
-  background: #111111;
-  color: #ffffff;
-  padding: 12px;
+
+  border: 2px solid #555;
+  background: #111;
+  color: #fff;
+
+  padding: 11px;
   border-radius: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
+
   text-transform: uppercase;
-  transition: border-color 0.3s;
+  outline: none;
 }
 
-.fighter-name:focus { outline: none; border-color: #aaaaaa; }
+.fighter-name:focus {
+  border-color: #aaa;
+}
+
+/* ==================================
+   MARCADOR
+================================== */
 
 .score-display {
-  font-size: 7.5rem;
-  font-weight: bold;
+  font-size: 7rem;
+  font-weight: 900;
+
   background: #0a0a0a;
-  border: 3px solid #333333;
+  border: 3px solid #333;
+
   width: 240px;
-  height: 180px;
+  height: 175px;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 12px;
-  margin-bottom: 25px;
-  color: #dddddd;
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+
+  border-radius: 13px;
+  margin-bottom: 20px;
+
+  color: #ddd;
+
+  box-shadow:
+    inset 0 0 22px rgba(0, 0, 0, 0.85);
 }
+
+/* ==================================
+   BOTONES
+================================== */
 
 .controls {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
+
   justify-content: center;
-  max-width: 380px;
-  margin-bottom: 25px;
+
+  max-width: 400px;
+  width: 90%;
+
+  margin-bottom: 20px;
 }
 
 .btn {
-  font-size: 1.1rem;
-  font-weight: bold;
-  padding: 14px 15px;
-  border: 1px solid #555555;
-  border-radius: 6px;
-  cursor: pointer;
-  background-color: #1a1a1a;
-  color: #eeeeee;
+  font-size: 1rem;
+  font-weight: 900;
+
+  padding: 13px 12px;
+
+  border: 1px solid #555;
+  border-radius: 7px;
+
+  background: #1a1a1a;
+  color: #eee;
+
   flex: 1 1 45%;
-  transition: all 0.2s;
+
+  transition: 0.15s;
 }
 
-.btn:hover { background-color: #333333; border-color: #888888; }
-.btn:active { transform: scale(0.96); }
+.btn:hover {
+  background: #333;
+  border-color: #888;
+}
 
-.btn.penalty { background-color: #2b1100; border-color: #ff9800; color: #ffb74d; }
-.btn.warning { background-color: #2b0000; border-color: #f44336; color: #ef5350; }
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn.penalty {
+  background: #2b1100;
+  border-color: #ff9800;
+  color: #ffb74d;
+}
+
+.btn.warning {
+  background: #2b0000;
+  border-color: #f44336;
+  color: #ef5350;
+}
+
+/* ==================================
+   HISTORIAL LOCAL
+================================== */
 
 .history-title {
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #888888;
+  font-size: 1rem;
+  font-weight: 900;
+
+  margin-bottom: 8px;
+
+  color: #aaa;
+  letter-spacing: 0.3px;
 }
 
 .history-list {
   list-style: none;
+
   width: 90%;
-  max-height: 120px;
+  max-width: 400px;
+
+  height: 125px;
+
   overflow-y: auto;
-  background: #0a0a0a;
-  border: 1px solid #333333;
-  border-radius: 6px;
-  padding: 10px;
+
+  background: rgba(6, 6, 6, 0.82);
+
+  border: 1px solid #333;
+  border-radius: 10px;
+
+  padding: 8px;
 }
 
 .history-list li {
-  font-size: 1rem;
-  padding: 6px 0;
-  border-bottom: 1px solid #1a1a1a;
-  color: #bbbbbb;
+  display: flex;
+
+  align-items: center;
+  gap: 8px;
+
+  font-size: 0.92rem;
+
+  padding: 8px 9px;
+  margin-bottom: 5px;
+
+  background: #101010;
+
+  border: 1px solid #1e1e1e;
+
+  border-left: 3px solid #555;
+
+  border-radius: 7px;
+
+  color: #ddd;
+}
+
+.blue-side .history-list li {
+  border-left-color: var(--blue);
+}
+
+.red-side .history-list li {
+  border-left-color: var(--red);
+}
+
+.history-list .history-time {
+  margin-left: auto;
+
+  font-family: monospace;
+
+  color: #888;
+
+  white-space: nowrap;
 }
 
 /* ==================================
-   CONTROLES INFERIORES Y CRONÓMETRO
-   ================================== */
+   CONTROLES INFERIORES
+================================== */
+
 .bottom-controls {
-  background-color: #080808;
-  padding: 25px;
+  background: #080808;
+
+  padding: 22px;
+
   display: flex;
   flex-direction: column;
+
   align-items: center;
-  gap: 25px;
+
+  gap: 20px;
+
+  border-top: 1px solid #222;
 }
 
 .timer-container {
   display: flex;
   flex-direction: column;
+
   align-items: center;
+
+  width: 100%;
 }
 
 .timer-adjust {
   display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
+
+  gap: 8px;
+
+  flex-wrap: wrap;
+
+  justify-content: center;
+
+  margin-bottom: 9px;
 }
 
 .btn-adjust {
   background: #1a1a1a;
-  color: #aaaaaa;
-  border: 1px solid #444444;
-  padding: 6px 12px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s;
+
+  color: #aaa;
+
+  border: 1px solid #444;
+
+  padding: 6px 11px;
+
+  font-size: 0.88rem;
+
+  font-weight: 900;
+
+  border-radius: 5px;
 }
 
-.btn-adjust:hover { background: #333333; color: #ffffff; }
+.btn-adjust:hover {
+  background: #333;
+  color: #fff;
+}
 
 .timer-display {
-  font-size: 4.5rem;
-  font-weight: bold;
+  font-size: 4.2rem;
+  font-weight: 900;
+
   font-family: monospace;
-  color: #ffffff;
+
+  color: #fff;
+
   letter-spacing: 4px;
-  margin-bottom: 15px;
-  background: #000000;
-  padding: 10px 40px;
-  border: 2px solid #555555;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(255,255,255,0.05);
+
+  margin-bottom: 13px;
+
+  background: #000;
+
+  padding: 9px 35px;
+
+  border: 2px solid #555;
+
+  border-radius: 11px;
+
+  min-width: 230px;
+
+  text-align: center;
 }
 
 .timer-buttons {
   display: flex;
-  gap: 15px;
-}
 
-.btn-timer {
-  padding: 12px 25px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  background-color: #1a1a1a;
-  color: #dddddd;
-  border: 1px solid #555555;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
+  gap: 12px;
 
-.btn-timer:hover { background-color: #333333; }
-.btn-timer.start { border-color: #4caf50; color: #81c784; }
-.btn-timer.pause { border-color: #ff9800; color: #ffb74d; }
-
-.global-actions {
-  display: flex;
-  gap: 20px;
   flex-wrap: wrap;
+
   justify-content: center;
 }
 
-.reset-btn, .history-btn {
-  padding: 15px 35px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  background-color: #111111;
-  color: #ffffff;
-  border: 2px solid #555555;
-  border-radius: 6px;
-  cursor: pointer;
-  text-transform: uppercase;
-  transition: all 0.2s;
+.btn-timer {
+  padding: 11px 22px;
+
+  font-size: 1rem;
+
+  font-weight: 900;
+
+  background: #1a1a1a;
+
+  color: #ddd;
+
+  border: 1px solid #555;
+
+  border-radius: 7px;
 }
 
-.reset-btn:hover { background-color: #2b0000; border-color: #f44336; }
-.history-btn:hover { background-color: #00152b; border-color: #2196f3; }
+.btn-timer:hover {
+  background: #333;
+}
+
+.btn-timer.start {
+  border-color: #4caf50;
+  color: #81c784;
+}
+
+.btn-timer.pause {
+  border-color: #ff9800;
+  color: #ffb74d;
+}
+
+.btn-timer.reset {
+  border-color: #777;
+  color: #bbb;
+}
 
 /* ==================================
-   MODAL HISTORIAL GLOBAL DOS COLUMNAS
-   ================================== */
+   ACCIONES
+================================== */
+
+.global-actions {
+  display: flex;
+
+  gap: 15px;
+
+  flex-wrap: wrap;
+
+  justify-content: center;
+}
+
+.reset-btn,
+.history-btn {
+  padding: 13px 25px;
+
+  font-size: 1.05rem;
+
+  font-weight: 900;
+
+  background: #111;
+
+  color: #fff;
+
+  border: 2px solid #555;
+
+  border-radius: 7px;
+
+  text-transform: uppercase;
+}
+
+.reset-btn:hover {
+  background: #2b0000;
+  border-color: #f44336;
+}
+
+.history-btn:hover {
+  background: #00152b;
+  border-color: #2196f3;
+}
+
+/* ==================================
+   MODAL
+================================== */
+
 .modal {
   display: none;
+
   position: fixed;
+
   z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+
+  inset: 0;
+
   overflow: auto;
-  background-color: rgba(0,0,0,0.85);
+
+  background: rgba(0, 0, 0, 0.88);
+
   backdrop-filter: blur(4px);
 }
 
 .modal-content {
-  background-color: #0d0d0d;
+  background: #0d0d0d;
+
   margin: 5% auto;
-  padding: 30px;
-  border: 2px solid #444444;
+
+  padding: 28px;
+
+  border: 2px solid #444;
+
   width: 95%;
-  max-width: 900px;
-  border-radius: 12px;
-  color: #ffffff;
-  box-shadow: 0 0 30px rgba(0,0,0,0.5);
+
+  max-width: 950px;
+
+  border-radius: 13px;
+
+  color: #fff;
+
+  box-shadow:
+    0 0 30px rgba(0, 0, 0, 0.5);
+
+  position: relative;
 }
 
 .close-btn {
-  color: #888888;
-  float: right;
-  font-size: 32px;
-  font-weight: bold;
-  cursor: pointer;
+  position: absolute;
+
+  right: 18px;
+  top: 12px;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #888;
+
+  font-size: 33px;
+
+  font-weight: 900;
 }
 
-.close-btn:hover { color: #ffffff; }
+.close-btn:hover {
+  color: #fff;
+}
 
 .modal-content h2 {
   text-align: center;
+
   margin-bottom: 20px;
-  border-bottom: 1px solid #333333;
-  padding-bottom: 15px;
-  color: #dddddd;
+
+  border-bottom: 1px solid #333;
+
+  padding-bottom: 14px;
+
+  color: #ddd;
 }
 
 .modal-columns {
   display: flex;
+
   gap: 20px;
 }
 
 .modal-col {
   flex: 1;
+
   background: #050505;
-  border: 1px solid #333333;
-  border-radius: 8px;
-  padding: 15px;
+
+  border: 1px solid #333;
+
+  border-radius: 9px;
+
+  padding: 14px;
 }
 
 .modal-col h3 {
   text-align: center;
+
   padding-bottom: 10px;
+
   border-bottom: 2px solid;
-  margin-bottom: 15px;
-  font-size: 1.2rem; /* Un poco más pequeño para que quepa escuela + nombre */
+
+  margin-bottom: 12px;
+
+  font-size: 1.1rem;
+
   text-transform: uppercase;
 }
 
-.blue-col h3 { border-color: #2196f3; color: #64b5f6; }
-.red-col h3 { border-color: #f44336; color: #e57373; }
+.blue-col h3 {
+  border-color: #2196f3;
+  color: #64b5f6;
+}
+
+.red-col h3 {
+  border-color: #f44336;
+  color: #e57373;
+}
 
 .global-history-list {
   list-style: none;
-  max-height: 400px;
+
+  max-height: 420px;
+
   overflow-y: auto;
 }
 
 .global-history-list li {
-  background: #111111;
-  margin-bottom: 10px;
-  padding: 12px;
-  border-radius: 6px;
-  font-size: 1.1rem;
-  color: #cccccc;
+  background: #111;
+
+  margin-bottom: 8px;
+
+  padding: 11px;
+
+  border-radius: 7px;
+
+  font-size: 1rem;
+
+  color: #ccc;
+
   display: flex;
+
   justify-content: space-between;
+
   align-items: center;
+
+  gap: 10px;
+
   border-left: 4px solid #555;
+}
+
+.blue-col .global-history-list li {
+  border-left-color: #2196f3;
+}
+
+.red-col .global-history-list li {
+  border-left-color: #f44336;
 }
 
 .time-stamp {
   font-family: monospace;
-  font-weight: bold;
-  color: #888888;
-  background: #000000;
-  padding: 4px 8px;
+
+  font-weight: 900;
+
+  color: #888;
+
+  background: #000;
+
+  padding: 4px 7px;
+
   border-radius: 4px;
+
+  white-space: nowrap;
 }
 
 /* ==================================
-   RESPONSIVE (CELULARES)
-   ================================== */
+   MÓVILES
+================================== */
+
 @media (max-width: 768px) {
-  .score-board { flex-direction: column; }
-  .side { padding: 15px; border-bottom: none; border-right: none; }
-  
-  .school-name { font-size: 1rem; }
-  .fighter-name { font-size: 1.6rem; }
-  .score-display { font-size: 6rem; width: 200px; height: 140px; }
-  
-  .timer-display { font-size: 3.5rem; padding: 10px 20px; }
-  .btn, .btn-timer { font-size: 1rem; padding: 12px; }
-  .reset-btn, .history-btn { font-size: 1rem; padding: 12px 20px; width: 100%; text-align: center; }
-  .global-actions { flex-direction: column; width: 90%; }
-  
-  .modal-columns { flex-direction: column; }
+
+  #main-content {
+    padding-top: 0;
+  }
+
+  .btn-transmit {
+    position: relative;
+
+    top: auto;
+    right: auto;
+
+    width: 92%;
+
+    margin: 10px auto 0;
+
+    display: block;
+  }
+
+  .sync-bar {
+    position: relative;
+  }
+
+  .score-board {
+    flex-direction: column;
+  }
+
+  .side {
+    padding: 15px;
+  }
+
+  .fighter-name {
+    font-size: 1.45rem;
+  }
+
+  .score-display {
+    font-size: 6rem;
+
+    width: 200px;
+    height: 140px;
+  }
+
+  .history-list {
+    height: 115px;
+  }
+
+  .timer-display {
+    font-size: 3.4rem;
+
+    padding: 9px 18px;
+  }
+
+  .modal-columns {
+    flex-direction: column;
+  }
+
+  .global-actions {
+    width: 92%;
+  }
+
+  .reset-btn,
+  .history-btn {
+    width: 100%;
+  }
 }
