@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marcador de Taekwondo ITF</title>
+  <link rel="stylesheet" href="puntos.css">
+</head>
+<body>
+  <!-- PANTALLA DE CARGA -->
+  <div id="loader-wrapper">
+    <div class="loader-content">
+      <img src="image.png" alt="Cargando" class="loader-logo">
+      <div class="progress-bar-container">
+        <div class="progress-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <div id="main-content" style="display: none;">
+    <div class="score-board">
+      <!-- LADO AZUL -->
+      <div class="side blue-side">
+        <!-- Nuevo campo para la escuela -->
+        <input type="text" class="school-name" id="school-blue" value="" placeholder="Escuela / Club Azul">
+        <input type="text" class="fighter-name" id="name-blue" value="Competidor Azul" placeholder="Nombre Azul">
+        <div class="score-display" id="score-blue">0</div>
+        
+        <div class="controls">
+          <button class="btn" onclick="addPoints('blue', 1)">+1 Punto</button>
+          <button class="btn" onclick="addPoints('blue', 2)">+2 Puntos</button>
+          <button class="btn" onclick="addPoints('blue', 3)">+3 Puntos</button>
+          <button class="btn penalty" onclick="addPoints('blue', -1)">-1 Punto</button>
+          <button class="btn warning" onclick="addGamjeom('blue')">Amonestación</button>
+        </div>
+
+        <div class="history-title">Historial Local:</div>
+        <ul class="history-list" id="history-blue"></ul>
+      </div>
+
+      <!-- LADO ROJO -->
+      <div class="side red-side">
+        <!-- Nuevo campo para la escuela -->
+        <input type="text" class="school-name" id="school-red" value="" placeholder="Escuela / Club Rojo">
+        <input type="text" class="fighter-name" id="name-red" value="Competidor Rojo" placeholder="Nombre Rojo">
+        <div class="score-display" id="score-red">0</div>
+        
+        <div class="controls">
+          <button class="btn" onclick="addPoints('red', 1)">+1 Punto</button>
+          <button class="btn" onclick="addPoints('red', 2)">+2 Puntos</button>
+          <button class="btn" onclick="addPoints('red', 3)">+3 Puntos</button>
+          <button class="btn penalty" onclick="addPoints('red', -1)">-1 Punto</button>
+          <button class="btn warning" onclick="addGamjeom('red')">Amonestación</button>
+        </div>
+
+        <div class="history-title">Historial Local:</div>
+        <ul class="history-list" id="history-red"></ul>
+      </div>
+    </div>
+
+    <!-- CRONÓMETRO Y CONTROLES GLOBALES (ABAJO) -->
+    <div class="bottom-controls">
+      <div class="timer-container">
+        <!-- BOTONES PARA EDITAR TIEMPO -->
+        <div class="timer-adjust">
+          <button class="btn-adjust" onclick="adjustTimer(60)">+1 Min</button>
+          <button class="btn-adjust" onclick="adjustTimer(10)">+10 Seg</button>
+          <button class="btn-adjust" onclick="adjustTimer(-10)">-10 Seg</button>
+          <button class="btn-adjust" onclick="adjustTimer(-60)">-1 Min</button>
+        </div>
+        
+        <div class="timer-display" id="timer">02:00</div>
+        
+        <div class="timer-buttons">
+          <button class="btn-timer start" onclick="startTimer()">Iniciar</button>
+          <button class="btn-timer pause" onclick="pauseTimer()">Pausar</button>
+          <button class="btn-timer reset" onclick="resetTimer()">Reset Tiempo</button>
+        </div>
+      </div>
+      
+      <div class="global-actions">
+        <button class="reset-btn" onclick="resetBoard()">Reiniciar Pelea</button>
+        <button class="history-btn" onclick="openGlobalHistory()">Ver Historial General</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL HISTORIAL GLOBAL DOS COLUMNAS -->
+  <div id="history-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeGlobalHistory()">&times;</span>
+      <h2>Historial General del Torneo</h2>
+      <div class="modal-columns">
+        
+        <!-- COLUMNA AZUL -->
+        <div class="modal-col blue-col">
+          <h3 id="modal-blue-name">Equipo Azul</h3>
+          <ul class="global-history-list" id="global-history-blue"></ul>
+        </div>
+        
+        <!-- COLUMNA ROJA -->
+        <div class="modal-col red-col">
+          <h3 id="modal-red-name">Equipo Rojo</h3>
+          <ul class="global-history-list" id="global-history-red"></ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="puntos.js"></script>
+</body>
+</html>
