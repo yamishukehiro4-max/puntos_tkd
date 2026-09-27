@@ -4,13 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Marcador de Taekwondo ITF</title>
-  <link rel="stylesheet" href="puntos.css">
+  <link rel="stylesheet" href="puntos.css?v=2.1">
 </head>
 <body>
-  <!-- BOTÓN PARA TRANSMITIR A PANTALLA -->
+  <!-- BOTÓN PARA TRANSMITIR A PANTALLA (Alineado a la derecha) -->
   <div class="top-bar">
-    <button class="btn-transmit" onclick="openDisplayWindow()">📺 Transmitir Pantalla</button>
-
     <div class="sync-panel">
       <div class="sync-info">
         <span id="sync-status" class="sync-status offline">⚪ Desconectado</span>
@@ -30,6 +28,7 @@
         <button class="btn-room secondary" onclick="copyShareLink()">🔗 Copiar enlace</button>
       </div>
     </div>
+    <button class="btn-transmit" onclick="openDisplayWindow()">📺 Transmitir Pantalla</button>
   </div>
 
   <!-- PANTALLA DE CARGA -->
@@ -82,10 +81,9 @@
       </div>
     </div>
 
-    <!-- CRONÓMETRO Y CONTROLES GLOBALES (ABAJO) -->
+    <!-- CRONÓMETRO Y CONTROLES GLOBALES -->
     <div class="bottom-controls">
       <div class="timer-container">
-        <!-- BOTONES PARA EDITAR TIEMPO -->
         <div class="timer-adjust">
           <button class="btn-adjust" onclick="adjustTimer(60)">+1 Min</button>
           <button class="btn-adjust" onclick="adjustTimer(10)">+10 Seg</button>
@@ -109,41 +107,36 @@
     </div>
   </div>
 
-  <!-- MODAL HISTORIAL GLOBAL DOS COLUMNAS -->
+  <!-- MODAL HISTORIAL GLOBAL -->
   <div id="history-modal" class="modal">
     <div class="modal-content">
       <span class="close-btn" onclick="closeGlobalHistory()">&times;</span>
       <h2>Historial General del Torneo</h2>
       <div class="modal-columns">
-        
-        <!-- COLUMNA AZUL -->
         <div class="modal-col blue-col">
           <h3 id="modal-blue-name">Equipo Azul</h3>
           <ul class="global-history-list" id="global-history-blue"></ul>
         </div>
-        
-       <!-- COLUMNA ROJA -->
-            <div class="modal-col red-col">
-                <h3 id="modal-red-name">Equipo Rojo</h3>
-                <ul class="global-history-list" id="global-history-red"></ul>
-            </div>
-
-            </div>
+        <div class="modal-col red-col">
+          <h3 id="modal-red-name">Equipo Rojo</h3>
+          <ul class="global-history-list" id="global-history-red"></ul>
         </div>
+      </div>
     </div>
+  </div>
 
-    <script type="module" src="firebase.js"></script>
-    <script type="module" src="puntos.js"></script>
+  <script type="module" src="firebase.js?v=2.1"></script>
+  <script type="module" src="puntos.js?v=2.1"></script>
 
-    <script>
-      window.addEventListener('load', () => {
-        setTimeout(() => {
-          const loader = document.getElementById('loader-wrapper');
-          const main = document.getElementById('main-content');
-          if(loader) loader.style.display = 'none';
-          if(main) main.style.display = 'flex';
-        }, 2500);
-      });
-    </script>
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const loader = document.getElementById('loader-wrapper');
+        const main = document.getElementById('main-content');
+        if(loader) loader.style.display = 'none';
+        if(main) main.style.display = 'flex';
+      }, 2500);
+    });
+  </script>
 </body>
 </html>

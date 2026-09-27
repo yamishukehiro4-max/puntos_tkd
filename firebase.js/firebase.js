@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
 import { getDatabase, ref, onValue, set, runTransaction } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
 
-// Tus credenciales reales integradas
 const firebaseConfig = {
     apiKey: "AIzaSyDQnf7VaPe1i0c5a4ACulDMk_PtXiEMCtY",
     authDomain: "marcador-taekwondo.firebaseapp.com",
@@ -17,7 +16,6 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const marcadorRef = ref(db, "marcador");
 
-// Tus funciones de guardado directo
 export function guardarMarcador(datos) {
     return set(marcadorRef, datos);
 }
@@ -31,14 +29,11 @@ export function escucharMarcador(callback) {
     });
 }
 
-// Estructura de sincronización para conectar la sala FINAL-01 del HTML
 window.firebaseSync = {
   subscribe: function(roomId, callback) {
     const roomRef = ref(db, `salas/${roomId}`);
     onValue(roomRef, (snapshot) => {
       callback(snapshot.val());
-      
-      // Cambiar estado visual a conectado cuando Firebase responda
       const syncStatus = document.getElementById('sync-status');
       if(syncStatus) {
           syncStatus.textContent = "🟢 Conectado";
